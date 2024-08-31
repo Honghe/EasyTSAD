@@ -3,6 +3,7 @@ from typing import Dict
 import numpy as np
 import sys
 import math
+import tqdm
 
 from .BaseSchema import BaseSchema
 from ..Methods import BaseMethodMeta
@@ -78,7 +79,7 @@ class ZeroShot(BaseSchema):
             method.train_valid_phase_all_in_one(tsTrains=tsTrain)
             self.train_valid_timer.toc()
             
-            for curve_name, curve in tsTest.items():
+            for curve_name, curve in tqdm.tqdm(tsTest.items()):
                 score_path = self.pm.get_score_path(self.method, self.schema, dataset_name, curve_name)
                 
                 ## test phase

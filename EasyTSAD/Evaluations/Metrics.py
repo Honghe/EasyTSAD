@@ -29,7 +29,7 @@ class F1class(MetricInterface):
         self.p += other.p
         self.r += other.r
         self.f1 += other.f1
-        
+        self.thres = other.thres
         self.num += 1
     
     def avg(self):
@@ -37,6 +37,7 @@ class F1class(MetricInterface):
             self.p /= self.num
             self.r /= self.num
             self.f1 /= self.num
+            self.thres /= self.num
     
     def to_dict(self):
         if self.num == 1:
@@ -55,6 +56,7 @@ class F1class(MetricInterface):
                     'f1':self.f1,
                     'precision': self.p,
                     'recall': self.r,
+                    'threshold' : self.thres
                 }
             }
     
