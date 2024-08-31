@@ -335,3 +335,12 @@ The Plot Results can be founded in path `workspace/Results/Plots/score_only`
       primaryClass={cs.LG}
 }
 ```
+
+# 添加Moirai模型进行异常检测
+Moirai模型来自: https://github.com/SalesforceAIResearch/uni2ts
+
+并使用NEK数据集来进行异常检测评估：https://github.com/CSTCloudOps/Dataset-for-TSAD 。使用时将Dataset-for-TSAD的`NEK`目录复制至EasyTSAD的`dataets/UTS`目录下。
+
+实验说明：未使用`run_baseline`中的`preprocess = "min-max"`，即未对观测的数值进行归一 化。
+
+检测效果: Moirai在NEK（点异常）上效果不错，在UCR（模式异常）上效果不佳。

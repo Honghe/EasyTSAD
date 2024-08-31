@@ -39,7 +39,7 @@ class TSData:
         info (dict):
             Some informations about the dataset, which might be useful.
     '''
-    def __init__(self, train, valid, test, train_label, test_label, valid_label, info) -> None:
+    def __init__(self, train, valid, test, train_label, test_label, valid_label, info, test_timestamp) -> None:
         self.train = train
         self.valid = valid
         self.test = test
@@ -47,6 +47,7 @@ class TSData:
         self.test_label = test_label
         self.valid_label = valid_label
         self.info = info
+        self.test_timestamp = test_timestamp
     
     @classmethod
     def buildfrom(cls, types, dataset, data_name, train_proportion:float=1, valid_proportion:float=0):
@@ -93,8 +94,17 @@ class TSData:
         info_path = pm.get_dataset_info(types, dataset, data_name)
         with open(info_path, 'r') as f:
             info = json.load(f)
+
+        test_timestamp_path = pm.get_dataset_test_timestamp(types, dataset, data_name)
+        if os.path.exists(test_timestamp_path):
+            test_timestamp = np.load(test_timestamp_path)
+        else:
+            print('warnning: timestamp data is synthetic')
+            # 若不存在timestamp，则造一个，间隔为3600s的UTC
+            test_timestamp = np.arange(0, len(test_label)) * 3600
+
         
-        return cls(train, valid, test, train_label, test_label, valid_label, info)
+        return cls(train, valid, test, train_label, test_label, valid_label, info, test_timestamp)
 
     def min_max_norm(self, feature_range=(0,1)):
         '''
