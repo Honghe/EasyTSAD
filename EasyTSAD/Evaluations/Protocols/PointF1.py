@@ -22,7 +22,7 @@ class PointF1(EvalInterface):
             recall: corresponding recall value;
         '''
         prec, recall, thresholds = sklearn.metrics.precision_recall_curve(y_true=labels,
-                                                                     probas_pred=scores)
+                                                                     y_score=scores)
         
         f1_all = (2 * prec * recall) / (prec + recall)
         max_idx = np.argmax(f1_all)
