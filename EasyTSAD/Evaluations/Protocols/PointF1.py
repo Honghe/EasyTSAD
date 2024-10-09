@@ -21,7 +21,7 @@ class PointF1(EvalInterface):
             precision: corresponding precision value;\n
             recall: corresponding recall value;
         '''
-        prec, recall, _ = sklearn.metrics.precision_recall_curve(y_true=labels,
+        prec, recall, thresholds = sklearn.metrics.precision_recall_curve(y_true=labels,
                                                                      probas_pred=scores)
         
         f1_all = (2 * prec * recall) / (prec + recall)
@@ -31,5 +31,6 @@ class PointF1(EvalInterface):
             name=self.name,
             p=prec[max_idx],
             r=recall[max_idx],
-            f1=f1_all[max_idx]
+            f1=f1_all[max_idx],
+            thres=float(thresholds[max_idx])
         )

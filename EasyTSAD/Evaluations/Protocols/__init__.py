@@ -11,4 +11,5 @@ from .PointF1PA import PointF1PA
 from .PointKthF1PA import PointKthF1PA
 from .PointPrc import PointPrc
 from .PointRoc import PointRoc
+from .PointF1 import PointF1
 from .VUS import VUS_ROC, VUS_PR, R_AP, R_AUC
