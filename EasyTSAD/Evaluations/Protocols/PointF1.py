@@ -23,8 +23,13 @@ class PointF1(EvalInterface):
         '''
         prec, recall, thresholds = sklearn.metrics.precision_recall_curve(y_true=labels,
                                                                      y_score=scores)
-        
-        f1_all = (2 * prec * recall) / (prec + recall)
+        # Sometimes precision_recall_curve picks a few thresholds that are too high for the data
+        # so you end up with points where both precision and recall are zero
+        # f1_all = (2 * prec * recall) / (prec + recall)
+        # compute maximum f1 score using precision_recall_curve https://stackoverflow.com/a/66549018/974526
+        numerator = 2 * recall * prec
+        denom = recall + prec   # denominator
+        f1_all = np.divide(numerator, denom, out=np.zeros_like(denom), where=(denom!=0))
         max_idx = np.argmax(f1_all)
         
         return F1class(
